@@ -101,5 +101,19 @@ class Dog
       self.new_from_db(row) #call new_from_db method on self; create a object with those attributes from the DB
     else
       self.create(name: name, breed: breed) #otherwise, create a new instance
+    end
   end
+
+  def update
+  sql = <<-SQL
+    UPDATE dogs
+    SET 
+      name = ?,
+      breed = ?
+    WHERE id = ?;
+  SQL
+
+  DB[:conn].execute(sql, self.name, self.breed, self.id)
+  end
+
 end
